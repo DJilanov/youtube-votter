@@ -4,11 +4,13 @@ const http = require('http');
 const bodyParser = require('body-parser');
 const puppeteer = require('puppeteer');
 const ProxyVerifier = require('proxy-verifier');
+const fs = require('fs');
 
 var app = express();
 
 let proxyArray = [];
 let chromeCounter = 0;
+let successCounter = 0;
 let workingProxies = [];
 
 var app = express();
@@ -49,6 +51,7 @@ const runChrome = async (url, ip, port) => {
     try {
         await loadDirPage(page);
     } catch (e) {
+        chromeCounter--;
         await browser.close();
         return;
     }
@@ -60,6 +63,7 @@ const runChrome = async (url, ip, port) => {
     try {
         await loadUrlPage(page, url);
     } catch (e) {
+        chromeCounter--;
         await browser.close();
         return;
     }
@@ -71,6 +75,11 @@ const runChrome = async (url, ip, port) => {
     await page.evaluate(() => {
         try {
             document.getElementsByClassName('style-scope yt-button-renderer style-text size-small')[0].click();
+        } catch(e) {
+
+        }
+        try {
+            document.getElementsByClassName('ytp-ad-skip-button ytp-button')[0].click();
         } catch(e) {
 
         }
@@ -104,6 +113,8 @@ const runChrome = async (url, ip, port) => {
     });
     await browser.close();
     chromeCounter--;
+    successCounter++;
+    fs.writeFile('counter.txt', successCounter, (err) => {});
     if(chromeCounter < 10) {
         let proxy = workingProxies.pop();
         runChrome('https://www.youtube.com/watch?v=JBQGHqv-pCI', proxy.ipAddress, proxy.port);
@@ -162,6 +173,8 @@ const testProxy = (proxy) => {
         testUrl: 'https://www.google.com/?q=test',
         testFn: (data, status, headers) => {
             if(status < 300) {
+                console.log('workingProxies length: ', workingProxies.length);
+                console.log('chromeCounter: ', chromeCounter);
                 if(chromeCounter < 10) {
                     runChrome('https://www.youtube.com/watch?v=JBQGHqv-pCI', proxy.ipAddress, proxy.port);
                 } else {
