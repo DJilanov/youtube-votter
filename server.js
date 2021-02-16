@@ -101,6 +101,55 @@ const runChrome = async (url, ip, port) => {
 
         }
         try {
+            document.getElementsByClassName('ytp-ad-skip-button ytp-button')[0].click();
+        } catch(e) {
+
+        }
+        try {
+            document.getElementsByClassName('ytp-fullscreen-button ytp-button')[0].click()
+        } catch(e) {
+
+        }
+    });
+    await  new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve('foo');
+        }, 5000);
+    });
+    await page.evaluate(() => {
+        try {
+            document.getElementsByClassName('U26fgb O0WRkf oG5Srb HQ8yf C0oVfc wtr0xd ic02He M9Bg4d')[0].click();
+        } catch(e) {
+
+        }
+        try {
+            document.getElementsByClassName('ytp-ad-skip-button ytp-button')[0].click();
+        } catch(e) {
+
+        }
+        try {
+            document.getElementsByClassName('ytp-fullscreen-button ytp-button')[0].click()
+        } catch(e) {
+
+        }
+    });
+    await  new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve('foo');
+        }, 5000);
+    });
+    await page.evaluate(() => {
+        try {
+            document.getElementsByClassName('U26fgb O0WRkf oG5Srb HQ8yf C0oVfc wtr0xd ic02He M9Bg4d')[0].click();
+        } catch(e) {
+
+        }
+        try {
+            document.getElementsByClassName('ytp-ad-skip-button ytp-button')[0].click();
+        } catch(e) {
+
+        }
+        try {
             document.getElementsByClassName('ytp-fullscreen-button ytp-button')[0].click()
         } catch(e) {
 
