@@ -37,7 +37,7 @@ const runChrome = async (url, ip, port) => {
         executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
         defaultViewport: null,
         args: [
-            '--mute-audio',
+            // '--mute-audio',
             "--autoplay-policy=no-user-gesture-required",
             `--proxy-server=${ip}:${port}`,
             `--ignore-certificate-errors`,
