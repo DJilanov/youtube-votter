@@ -1,0 +1,20 @@
+{
+  "name": "mariospammer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "free-proxy": "latest",
+    "proxy-lists": "latest",
+    "express": "latest",
+    "body-parser": "latest",
+    "proxy-verifier": "latest",
+    "puppeteer": "7.1.0"
+  }
+}
