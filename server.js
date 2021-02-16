@@ -211,7 +211,7 @@ const getRandomproxy = () => {
 };
 
 const testProxy = (proxy) => {
-    if(!proxy.protocols) {
+    if(!proxy || !proxy.protocols) {
         testProxy(getRandomproxy());
         return;
     }
