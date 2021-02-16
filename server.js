@@ -169,7 +169,9 @@ const runChrome = async (url, ip, port) => {
         runChrome('https://www.youtube.com/watch?v=JBQGHqv-pCI', proxy.ipAddress, proxy.port);
     }
     if(workingProxies.length < 100) {
-        testProxy(getRandomproxy());
+        setTimeout(() => {
+            testProxy(getRandomproxy());
+        }, 1);
     }
 };
 
@@ -212,7 +214,9 @@ const getRandomproxy = () => {
 
 const testProxy = (proxy) => {
     if(!proxy || !proxy.protocols) {
-        testProxy(getRandomproxy());
+        setTimeout(() => {
+            testProxy(getRandomproxy());
+        }, 1);
         return;
     }
     ProxyVerifier.test({
@@ -233,13 +237,17 @@ const testProxy = (proxy) => {
                 console.log('Fail');
             }
             if(workingProxies.length < 100) {
-                testProxy(getRandomproxy());
+                setTimeout(() => {
+                    testProxy(getRandomproxy());
+                }, 1);
             }
         }
     }, (error, results) => {
         // Do something with error or results.
         console.log('Fail');
-        testProxy(getRandomproxy());
+        setTimeout(() => {
+            testProxy(getRandomproxy());
+        }, 1);
     });
 };
 
