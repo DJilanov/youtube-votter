@@ -165,8 +165,10 @@ const runChrome = async (url, ip, port) => {
     successCounter++;
     fs.writeFile('counter.txt', successCounter + '', (err) => {});
     if(chromeCounter < 10) {
-        let proxy = workingProxies.pop();
-        runChrome('https://www.youtube.com/watch?v=JBQGHqv-pCI', proxy.ipAddress, proxy.port);
+        while(chromeCounter < 10) {
+            let proxy = workingProxies.pop();
+            runChrome('https://www.youtube.com/watch?v=JBQGHqv-pCI', proxy.ipAddress, proxy.port);
+        }
     }
     if(workingProxies.length < 100) {
         setTimeout(() => {
