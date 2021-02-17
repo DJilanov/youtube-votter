@@ -7,6 +7,7 @@ const ProxyVerifier = require('proxy-verifier');
 const fs = require('fs');
 
 const urlLink = 'https://www.youtube.com/watch?v=JBQGHqv-pCI';
+const instances = 20;
 
 var app = express();
 
@@ -166,13 +167,13 @@ const runChrome = async (url, ip, port) => {
     chromeCounter--;
     successCounter++;
     fs.writeFile('counter.txt', successCounter + '', (err) => {});
-    if(chromeCounter < 10) {
-        while((chromeCounter < 10) && (workingProxies.length > 10)) {
+    if(chromeCounter < instances) {
+        while((chromeCounter < instances) && (workingProxies.length > instances)) {
             let proxy = workingProxies.pop();
             runChrome(urlLink, proxy.ipAddress, proxy.port);
         }
     }
-    if(workingProxies.length < 100) {
+    if(workingProxies.length < instances * 10) {
         setTimeout(() => {
             testProxy(getRandomproxy());
         }, 1);
@@ -232,7 +233,7 @@ const testProxy = (proxy) => {
             if(status < 300) {
                 console.log('workingProxies length: ', workingProxies.length);
                 console.log('chromeCounter: ', chromeCounter);
-                if(chromeCounter < 10) {
+                if(chromeCounter < instances) {
                     runChrome(urlLink, proxy.ipAddress, proxy.port);
                 } else {
                     workingProxies.push(proxy);
@@ -240,7 +241,7 @@ const testProxy = (proxy) => {
             } else {
                 console.log('Fail');
             }
-            if(workingProxies.length < 100) {
+            if(workingProxies.length < instances * 10) {
                 setTimeout(() => {
                     testProxy(getRandomproxy());
                 }, 1);
