@@ -79,6 +79,13 @@ const runChrome = async (url, ip, port) => {
             resolve('foo');
         }, 5000);
     });
+    try {
+        if(document.getElementsByClassName('ytp-fullscreen-button ytp-button')[0]) {
+            document.getElementsByClassName('ytp-fullscreen-button ytp-button')[0].click()
+        }
+    } catch(e) {
+
+    }
     await  new Promise((resolve, reject) => {
         setTimeout(() => {
             resolve('foo');
@@ -118,13 +125,6 @@ const clickAll = async (page, browser) => {
         try {
             if(document.getElementsByClassName('ytp-ad-skip-button ytp-button')[0]) {
                 document.getElementsByClassName('ytp-ad-skip-button ytp-button')[0].click();
-            }
-        } catch(e) {
-
-        }
-        try {
-            if(document.getElementsByClassName('ytp-fullscreen-button ytp-button')[0]) {
-                document.getElementsByClassName('ytp-fullscreen-button ytp-button')[0].click()
             }
         } catch(e) {
 
