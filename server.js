@@ -8,7 +8,7 @@ const fs = require('fs');
 
 const urlLink = 'https://www.youtube.com/watch?v=JBQGHqv-pCI';
 const dummy = 'http://www.abv.bg';
-const instances = 5;
+const instances = 30;
 
 var app = express();
 
