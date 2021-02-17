@@ -7,13 +7,14 @@ const ProxyVerifier = require('proxy-verifier');
 const fs = require('fs');
 
 const urlLink = 'https://www.youtube.com/watch?v=JBQGHqv-pCI';
-const instances = 20;
+const instances = 5;
 
 var app = express();
 
 let proxyArray = [];
 let chromeCounter = 0;
 let successCounter = 0;
+let failCounter = 0;
 let workingProxies = [];
 
 var app = express();
@@ -63,6 +64,9 @@ const runChrome = async (url, ip, port) => {
             resolve('foo');
         }, 5000);
     });
+    setInterval(() => {
+        clickAll(page, browser);
+    }, 5000);
     try {
         await loadUrlPage(page, url);
     } catch (e) {
@@ -74,26 +78,6 @@ const runChrome = async (url, ip, port) => {
         setTimeout(() => {
             resolve('foo');
         }, 5000);
-    });
-    setInterval(() => {
-        clickAll(page);
-    }, 5000);
-    await page.evaluate(() => {
-        try {
-            document.getElementsByClassName('U26fgb O0WRkf oG5Srb HQ8yf C0oVfc wtr0xd ic02He M9Bg4d')[0].click();
-        } catch(e) {
-
-        }
-        try {
-            document.getElementsByClassName('ytp-ad-skip-button ytp-button')[0].click();
-        } catch(e) {
-
-        }
-        try {
-            document.getElementsByClassName('ytp-fullscreen-button ytp-button')[0].click()
-        } catch(e) {
-
-        }
     });
     await  new Promise((resolve, reject) => {
         setTimeout(() => {
@@ -122,7 +106,7 @@ const runChrome = async (url, ip, port) => {
     }
 };
 
-const clickAll = (page) => {
+const clickAll = async (page, browser) => {
     await page.evaluate(() => {
         try {
             if(document.getElementsByClassName('U26fgb O0WRkf oG5Srb HQ8yf C0oVfc wtr0xd ic02He M9Bg4d')[0]) {
@@ -159,6 +143,22 @@ const clickAll = (page) => {
         } catch(e) {
 
         }
+
+        try {
+            if(document.getElementById('captcha-form') !== null) {
+                console.log('Check captcha');
+                chromeCounter--;
+                browser.close();
+            }
+            if(document.getElementById('captcha-page') !== null) {
+                console.log('Check captcha');
+                chromeCounter--;
+                browser.close();
+            }
+        } catch(e) {
+
+        }
+        return true;
     });
 };
 
@@ -190,7 +190,7 @@ const fetchproxies = () => {
         })
         .once('end', function() {
             // Done getting proxies.
-            console.log(proxies);
+            console.log('proxyArray: ', proxyArray.length);
             console.log('end!');
         });
 }
@@ -221,7 +221,7 @@ const testProxy = (proxy) => {
                     workingProxies.push(proxy);
                 }
             } else {
-                console.log('Fail');
+                fs.writeFile('failcounter.txt', failCounter + '', (err) => {});
             }
             if(workingProxies.length < instances * 10) {
                 setTimeout(() => {
@@ -231,7 +231,7 @@ const testProxy = (proxy) => {
         }
     }, (error, results) => {
         // Do something with error or results.
-        console.log('Fail');
+        fs.writeFile('failcounter.txt', failCounter + '', (err) => {});
         setTimeout(() => {
             testProxy(getRandomproxy());
         }, 1);
