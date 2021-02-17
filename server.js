@@ -52,12 +52,14 @@ const runChrome = async (url, ip, port) => {
             '--no-sandbox'
         ]
     });
+    browser.on('disconnected', () => {
+        chromeCounter--;
+    });
     const page = await browser.newPage();
     page.setDefaultNavigationTimeout(30000); 
     try {
         await loadDirPage(page);
     } catch (e) {
-        chromeCounter--;
         await browser.close();
         successfull = false;
         return;
@@ -79,14 +81,12 @@ const runChrome = async (url, ip, port) => {
             await loadUrlPage(page, url);
         } else {
             if (!page.isClosed()) {
-                chromeCounter--;
                 await browser.close();
             }
             return;
         }
     } catch (e) {
         if (!page.isClosed()) {
-            chromeCounter--;
             await browser.close();
         }
         return;
@@ -115,7 +115,6 @@ const runChrome = async (url, ip, port) => {
         }, (Math.floor(Math.random() * 31) + 50) * 1000);
     });
     await browser.close();
-    chromeCounter--;
     successCounter++;
     fs.writeFile('counter.txt', successCounter + '', (err) => {});
     if((chromeCounter < instances) && workingProxies.length()) {
@@ -164,14 +163,12 @@ const clickAll = async (page, browser) => {
             try {
                 if(document.getElementById('captcha-form') !== null) {
                     console.log('Check captcha');
-                    chromeCounter--;
                     successCounter--;
                     browser.close();
                     return false;
                 }
                 if(document.getElementById('captcha-page') !== null) {
                     console.log('Check captcha');
-                    chromeCounter--;
                     successCounter--;
                     browser.close();
                     return false;
