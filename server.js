@@ -78,15 +78,15 @@ const runChrome = async (url, ip, port) => {
         if (!page.isClosed()) {
             await loadUrlPage(page, url);
         } else {
-            chromeCounter--;
             if (!page.isClosed()) {
+                chromeCounter--;
                 await browser.close();
             }
             return;
         }
     } catch (e) {
-        chromeCounter--;
         if (!page.isClosed()) {
+            chromeCounter--;
             await browser.close();
         }
         return;
