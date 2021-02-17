@@ -8,7 +8,7 @@ const fs = require('fs');
 
 const urlLink = 'https://www.youtube.com/watch?v=JBQGHqv-pCI';
 const dummy = 'http://www.abv.bg';
-const instances = 5;
+const instances = 30;
 
 var app = express();
 
@@ -263,6 +263,15 @@ const testProxy = (proxy) => {
         }, 1);
     });
 };
+
+setInterval(() => {
+    if(chromeCounter < instances) {
+        while((chromeCounter < instances) && (workingProxies.length > instances)) {
+            let proxy = workingProxies.pop();
+            runChrome(urlLink, proxy.ipAddress, proxy.port);
+        }
+    }
+}, 120000)
 
 setInterval(() => {
     fetchproxies();
