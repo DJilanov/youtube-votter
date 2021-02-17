@@ -60,7 +60,6 @@ const runChrome = async (url, ip, port) => {
     try {
         await loadDirPage(page);
     } catch (e) {
-        chromeCounter--;
         if (!page.isClosed()) {
             await browser.close();
         }
@@ -82,7 +81,6 @@ const runChrome = async (url, ip, port) => {
         if (!page.isClosed()) {
             await loadUrlPage(page, url);
         } else {
-            chromeCounter--;
             if (!page.isClosed()) {
                 await browser.close();
             }
@@ -291,7 +289,7 @@ setInterval(() => {
 setInterval(() => {
     chromeCounter--;
     fetchproxies();
-}, 600000);
+}, 300000);
 
 fetchproxies();
 
