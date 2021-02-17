@@ -6,6 +6,8 @@ const puppeteer = require('puppeteer');
 const ProxyVerifier = require('proxy-verifier');
 const fs = require('fs');
 
+const urlLink = 'https://www.youtube.com/watch?v=JBQGHqv-pCI';
+
 var app = express();
 
 let proxyArray = [];
@@ -165,9 +167,9 @@ const runChrome = async (url, ip, port) => {
     successCounter++;
     fs.writeFile('counter.txt', successCounter + '', (err) => {});
     if(chromeCounter < 10) {
-        while(chromeCounter < 10) {
+        while((chromeCounter < 10) && (workingProxies.length > 10)) {
             let proxy = workingProxies.pop();
-            runChrome('https://www.youtube.com/watch?v=JBQGHqv-pCI', proxy.ipAddress, proxy.port);
+            runChrome(urlLink, proxy.ipAddress, proxy.port);
         }
     }
     if(workingProxies.length < 100) {
@@ -231,7 +233,7 @@ const testProxy = (proxy) => {
                 console.log('workingProxies length: ', workingProxies.length);
                 console.log('chromeCounter: ', chromeCounter);
                 if(chromeCounter < 10) {
-                    runChrome('https://www.youtube.com/watch?v=JBQGHqv-pCI', proxy.ipAddress, proxy.port);
+                    runChrome(urlLink, proxy.ipAddress, proxy.port);
                 } else {
                     workingProxies.push(proxy);
                 }
