@@ -56,7 +56,7 @@ const runChrome = async (url, ip, port) => {
         chromeCounter--;
     });
     const page = await browser.newPage();
-    page.setDefaultNavigationTimeout(30000); 
+    await page.setDefaultNavigationTimeout(60000);
     try {
         await loadDirPage(page);
     } catch (e) {
