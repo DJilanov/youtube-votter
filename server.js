@@ -8,7 +8,7 @@ const fs = require('fs');
 
 const urlLink = 'https://www.youtube.com/watch?v=JBQGHqv-pCI';
 const dummy = 'http://www.abv.bg';
-const instances = 30;
+const instances = 5;
 
 var app = express();
 
@@ -189,7 +189,7 @@ const clickAll = async (page, browser) => {
 };
 
 const loadDirPage = (page) => {
-    return page.goto(dummy, {waitUntil: 'networkidle2',timeout: 0});
+    return page.goto(dummy, {waitUntil: 'domcontentloaded',timeout: 0});
 };
 
 const loadUrlPage = (page, url) => {

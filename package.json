@@ -15,6 +15,6 @@
     "express": "latest",
     "body-parser": "latest",
     "proxy-verifier": "latest",
-    "puppeteer": "7.1.0"
+    "puppeteer": "latest"
   }
 }

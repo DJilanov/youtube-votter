@@ -1122,6 +1122,11 @@ netmask@^1.0.6:
   resolved "https://registry.yarnpkg.com/netmask/-/netmask-1.0.6.tgz#20297e89d86f6f6400f250d9f4f6b4c1945fcd35"
   integrity sha1-ICl+idhvb2QA8lDZ9Pa0wZRfzTU=
 
+network-speed@latest:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/network-speed/-/network-speed-2.1.0.tgz#94780e4cfb8c09cca19b6c96eded79b67f59ba7f"
+  integrity sha512-GiT/fckvGduVDChFugck/e8ZiLWLV82wAfF785iMBcwHA5EacDsYQJA0AneT+bh/7aTVfyUVY+eVB3kWjiHwJg==
+
 node-fetch@^2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
@@ -1371,7 +1376,7 @@ puppeteer@5.2.0:
     unbzip2-stream "^1.3.3"
     ws "^7.2.3"
 
-puppeteer@7.1.0:
+puppeteer@latest:
   version "7.1.0"
   resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-7.1.0.tgz#ae37f48ee13f157c5b9255d580ffe4c5c1298679"
   integrity sha512-lqOLzqCKdh7yUAHvK6LxgOpQrL8Bv1/jvS8MLDXxcNms2rlM3E8p/Wlwc7efbRZ0twxTzUeqjN5EqrTwxOwc9g==
