@@ -117,7 +117,7 @@ const runChrome = async (url, ip, port) => {
     await browser.close();
     successCounter++;
     fs.writeFile('counter.txt', successCounter + '', (err) => {});
-    if((chromeCounter < instances) && workingProxies.length {
+    if((chromeCounter < instances) && workingProxies.length) {
         let proxy = workingProxies.pop();
         runChrome(urlLink, proxy.ipAddress, proxy.port);
     }
