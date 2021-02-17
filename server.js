@@ -133,8 +133,8 @@ const clickAll = async (page, browser) => {
     try { 
         await page.evaluate(() => {
             try {
-                if(document.getElementsByClassName('U26fgb O0WRkf oG5Srb HQ8yf C0oVfc wtr0xd ic02He M9Bg4d')[0]) {
-                    document.getElementsByClassName('U26fgb O0WRkf oG5Srb HQ8yf C0oVfc wtr0xd ic02He M9Bg4d')[0].click();
+                if(document.getElementsByClassName('U26fgb O0WRkf oG5Srb HQ8yf')[0]) {
+                    document.getElementsByClassName('U26fgb O0WRkf oG5Srb HQ8yf')[0].click();
                 }
             } catch(e) {
 
