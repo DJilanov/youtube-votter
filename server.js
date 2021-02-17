@@ -130,7 +130,7 @@ const runChrome = async (url, ip, port) => {
 
 const clickAll = async (page, browser) => {
     try { 
-        await page.evaluate(() => {
+        await page.evaluate(async () => {
             try {
                 const [button] = await page.$x("//[contains(text(), 'No, thanks']");
                 if (button) {
