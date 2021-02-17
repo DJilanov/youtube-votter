@@ -119,10 +119,8 @@ const runChrome = async (url, ip, port) => {
     successCounter++;
     fs.writeFile('counter.txt', successCounter + '', (err) => {});
     if(chromeCounter < instances) {
-        for(let counter = 0; counter < 3; counter++) {
-            let proxy = workingProxies.pop();
-            runChrome(urlLink, proxy.ipAddress, proxy.port);
-        }
+        let proxy = workingProxies.pop();
+        runChrome(urlLink, proxy.ipAddress, proxy.port);
     }
     if(workingProxies.length < instances * 10) {
         setTimeout(() => {
