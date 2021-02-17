@@ -7,7 +7,8 @@ const ProxyVerifier = require('proxy-verifier');
 const fs = require('fs');
 
 const urlLink = 'https://www.youtube.com/watch?v=JBQGHqv-pCI';
-const instances = 30;
+const dummy = 'http://www.abv.bg';
+const instances = 5;
 
 var app = express();
 
@@ -35,6 +36,7 @@ app.post('/watch', (req, res) => {
 });
 
 const runChrome = async (url, ip, port) => {
+    let successfull = true;
     chromeCounter++
     const browser = await puppeteer.launch({ 
         headless: false,
@@ -57,6 +59,7 @@ const runChrome = async (url, ip, port) => {
     } catch (e) {
         chromeCounter--;
         await browser.close();
+        successfull = false;
         return;
     }
     await  new Promise((resolve, reject) => {
@@ -64,14 +67,28 @@ const runChrome = async (url, ip, port) => {
             resolve('foo');
         }, 5000);
     });
-    setInterval(() => {
-        clickAll(page, browser);
+    let interval = setInterval(() => {
+        if(successfull && !page.isClosed()) {
+            successfull = clickAll(page, browser);
+        } else {
+            clearInterval(interval);
+        }
     }, 5000);
     try {
-        await loadUrlPage(page, url);
+        if (!page.isClosed()) {
+            await loadUrlPage(page, url);
+        } else {
+            chromeCounter--;
+            if (!page.isClosed()) {
+                await browser.close();
+            }
+            return;
+        }
     } catch (e) {
         chromeCounter--;
-        await browser.close();
+        if (!page.isClosed()) {
+            await browser.close();
+        }
         return;
     }
     await  new Promise((resolve, reject) => {
@@ -80,17 +97,18 @@ const runChrome = async (url, ip, port) => {
         }, 5000);
     });
     try {
-        if(document.getElementsByClassName('ytp-fullscreen-button ytp-button')[0]) {
-            document.getElementsByClassName('ytp-fullscreen-button ytp-button')[0].click()
+        if (!page.isClosed()) {
+            await page.evaluate(() => {
+                if(document.getElementsByClassName('ytp-fullscreen-button ytp-button')[0]) {
+                    document.getElementsByClassName('ytp-fullscreen-button ytp-button')[0].click()
+                }
+            });
+        } else {
+            return;
         }
     } catch(e) {
 
     }
-    await  new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve('foo');
-        }, 5000);
-    });
     await  new Promise((resolve, reject) => {
         setTimeout(() => {
             resolve('foo');
@@ -114,56 +132,64 @@ const runChrome = async (url, ip, port) => {
 };
 
 const clickAll = async (page, browser) => {
-    await page.evaluate(() => {
-        try {
-            if(document.getElementsByClassName('U26fgb O0WRkf oG5Srb HQ8yf C0oVfc wtr0xd ic02He M9Bg4d')[0]) {
-                document.getElementsByClassName('U26fgb O0WRkf oG5Srb HQ8yf C0oVfc wtr0xd ic02He M9Bg4d')[0].click();
-            }
-        } catch(e) {
+    try { 
+        await page.evaluate(() => {
+            try {
+                if(document.getElementsByClassName('U26fgb O0WRkf oG5Srb HQ8yf C0oVfc wtr0xd ic02He M9Bg4d')[0]) {
+                    document.getElementsByClassName('U26fgb O0WRkf oG5Srb HQ8yf C0oVfc wtr0xd ic02He M9Bg4d')[0].click();
+                }
+            } catch(e) {
 
-        }
-        try {
-            if(document.getElementsByClassName('ytp-ad-skip-button ytp-button')[0]) {
-                document.getElementsByClassName('ytp-ad-skip-button ytp-button')[0].click();
             }
-        } catch(e) {
+            try {
+                if(document.getElementsByClassName('ytp-ad-skip-button ytp-button')[0]) {
+                    document.getElementsByClassName('ytp-ad-skip-button ytp-button')[0].click();
+                }
+            } catch(e) {
 
-        }
-        try {
-            if(document.getElementsByClassName('style-scope yt-button-renderer style-text size-small')[0]) {
-                document.getElementsByClassName('style-scope yt-button-renderer style-text size-small')[0].click();
             }
-        } catch(e) {
+            try {
+                if(document.getElementsByClassName('style-scope yt-button-renderer style-text size-small')[0]) {
+                    document.getElementsByClassName('style-scope yt-button-renderer style-text size-small')[0].click();
+                }
+            } catch(e) {
 
-        }
-        try {
-            if(document.getElementsByClassName('style-scope yt-button-renderer style-blue-text size-default')[0]) {
-                document.getElementsByClassName('style-scope yt-button-renderer style-blue-text size-default')[0].click();
             }
-        } catch(e) {
+            try {
+                if(document.getElementsByClassName('style-scope yt-button-renderer style-blue-text size-default')[0]) {
+                    document.getElementsByClassName('style-scope yt-button-renderer style-blue-text size-default')[0].click();
+                }
+            } catch(e) {
 
-        }
-
-        try {
-            if(document.getElementById('captcha-form') !== null) {
-                console.log('Check captcha');
-                chromeCounter--;
-                browser.close();
             }
-            if(document.getElementById('captcha-page') !== null) {
-                console.log('Check captcha');
-                chromeCounter--;
-                browser.close();
-            }
-        } catch(e) {
 
-        }
-        return true;
-    });
+            try {
+                if(document.getElementById('captcha-form') !== null) {
+                    console.log('Check captcha');
+                    chromeCounter--;
+                    successCounter--;
+                    browser.close();
+                    return false;
+                }
+                if(document.getElementById('captcha-page') !== null) {
+                    console.log('Check captcha');
+                    chromeCounter--;
+                    successCounter--;
+                    browser.close();
+                    return false;
+                }
+            } catch(e) {
+
+            }
+            return true;
+        });
+    } catch(e) {
+        return false;
+    }
 };
 
 const loadDirPage = (page) => {
-    return page.goto('http://www.abv.bg', {waitUntil: 'networkidle2',timeout: 0});
+    return page.goto(dummy, {waitUntil: 'networkidle2',timeout: 0});
 };
 
 const loadUrlPage = (page, url) => {
