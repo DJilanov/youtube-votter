@@ -242,6 +242,7 @@ const testProxy = (proxy) => {
                     workingProxies.push(proxy);
                 }
             } else {
+                failCounter++;
                 fs.writeFile('failcounter.txt', failCounter + '', (err) => {});
             }
             if(workingProxies.length < instances * 10) {
@@ -252,6 +253,7 @@ const testProxy = (proxy) => {
         }
     }, (error, results) => {
         // Do something with error or results.
+        failCounter++;
         fs.writeFile('failcounter.txt', failCounter + '', (err) => {});
         setTimeout(() => {
             testProxy(getRandomproxy());
