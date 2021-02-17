@@ -60,8 +60,10 @@ const runChrome = async (url, ip, port) => {
     try {
         await loadDirPage(page);
     } catch (e) {
-        await browser.close();
-        successfull = false;
+        chromeCounter--;
+        if (!page.isClosed()) {
+            await browser.close();
+        }
         return;
     }
     await  new Promise((resolve, reject) => {
@@ -80,6 +82,7 @@ const runChrome = async (url, ip, port) => {
         if (!page.isClosed()) {
             await loadUrlPage(page, url);
         } else {
+            chromeCounter--;
             if (!page.isClosed()) {
                 await browser.close();
             }
