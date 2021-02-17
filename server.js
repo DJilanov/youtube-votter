@@ -132,6 +132,22 @@ const clickAll = async (page, browser) => {
     try { 
         await page.evaluate(() => {
             try {
+                const [button] = await page.$x("//[contains(text(), 'No, thanks']");
+                if (button) {
+                    await button.click();
+                }
+            } catch(e) {
+
+            }
+            try {
+                const [button] = await page.$x("//[contains(text(), 'Agree']");
+                if (button) {
+                    await button.click();
+                }
+            } catch(e) {
+
+            }
+            try {
                 if(document.getElementsByClassName('U26fgb O0WRkf oG5Srb HQ8yf')[0]) {
                     document.getElementsByClassName('U26fgb O0WRkf oG5Srb HQ8yf')[0].click();
                 }
