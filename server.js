@@ -119,9 +119,13 @@ const runChrome = async (url, ip, port) => {
     successCounter++;
     fs.writeFile('counter.txt', successCounter + '', (err) => {});
     if(chromeCounter < instances) {
+        let counter = 0;
         while((chromeCounter < instances) && (workingProxies.length > instances)) {
+            counter++;
             let proxy = workingProxies.pop();
-            runChrome(urlLink, proxy.ipAddress, proxy.port);
+            setTimeout(() => {
+                runChrome(urlLink, proxy.ipAddress, proxy.port);
+            }, counter * 1500);
         }
     }
     if(workingProxies.length < instances * 10) {
@@ -268,7 +272,9 @@ setInterval(() => {
     if(chromeCounter < instances) {
         while((chromeCounter < instances) && (workingProxies.length > instances)) {
             let proxy = workingProxies.pop();
-            runChrome(urlLink, proxy.ipAddress, proxy.port);
+            setTimeout(() => {
+                runChrome(urlLink, proxy.ipAddress, proxy.port);
+            }, counter * 1500);
         }
     }
 }, 120000)
