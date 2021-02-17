@@ -119,13 +119,9 @@ const runChrome = async (url, ip, port) => {
     successCounter++;
     fs.writeFile('counter.txt', successCounter + '', (err) => {});
     if(chromeCounter < instances) {
-        let counter = 0;
-        while((chromeCounter < instances) && (workingProxies.length > instances)) {
-            counter++;
+        for(let counter = 0; counter < 3; counter++) {
             let proxy = workingProxies.pop();
-            setTimeout(() => {
-                runChrome(urlLink, proxy.ipAddress, proxy.port);
-            }, counter * 1500);
+            runChrome(urlLink, proxy.ipAddress, proxy.port);
         }
     }
     if(workingProxies.length < instances * 10) {
@@ -269,15 +265,12 @@ const testProxy = (proxy) => {
 };
 
 setInterval(() => {
-    if(chromeCounter < instances) {
-        while((chromeCounter < instances) && (workingProxies.length > instances)) {
-            let proxy = workingProxies.pop();
-            setTimeout(() => {
-                runChrome(urlLink, proxy.ipAddress, proxy.port);
-            }, counter * 1500);
-        }
+    if((chromeCounter < instances) && (workingProxies.length > instances)) {
+        let proxy = workingProxies.pop();
+        console.log('Run extra chrome');
+        runChrome(urlLink, proxy.ipAddress, proxy.port);
     }
-}, 120000)
+}, 12000)
 
 setInterval(() => {
     fetchproxies();
