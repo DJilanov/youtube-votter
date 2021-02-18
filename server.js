@@ -303,23 +303,23 @@ setInterval(() => {
 
 fetchproxies();
 
-// setTimeout(() => {
-//     // startProcess();
-//     for(let counter = 1; counter < instances; counter++) {
-//         setTimeout(() => {
-//             testProxy(getRandomproxy());
-//         }, 100 * counter)
-//     }
-// }, 10000);
-const checkAllProxies = () => {
-    console.log('!!!!Start testing!!!!!')
-    for(let counter = 1; counter < proxyArray.length; counter++) {
+setTimeout(() => {
+    // startProcess();
+    for(let counter = 1; counter < instances; counter++) {
         setTimeout(() => {
             testProxy(getRandomproxy());
-        }, 150 * counter)
+        }, 100 * counter)
     }
-};
+}, 10000);
+// const checkAllProxies = () => {
+//     console.log('!!!!Start testing!!!!!')
+//     for(let counter = 1; counter < proxyArray.length; counter++) {
+//         setTimeout(() => {
+//             testProxy(getRandomproxy());
+//         }, 150 * counter)
+//     }
+// };
 
-setTimeout(() => {
-    checkAllProxies();
-}, 60000);
+// setTimeout(() => {
+//     checkAllProxies();
+// }, 60000);
