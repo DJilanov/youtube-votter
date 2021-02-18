@@ -7,7 +7,7 @@ const ProxyVerifier = require('proxy-verifier');
 const fs = require('fs');
 
 const urlLink = 'https://www.youtube.com/watch?v=JBQGHqv-pCI';
-const dummy = 'http://www.abv.bg';
+const dummy = 'https://www.google.com/?q=mario';
 const instances = 20;
 
 var app = express();
@@ -57,19 +57,19 @@ const runChrome = async (url, ip, port) => {
     });
     const page = await browser.newPage();
     await page.setDefaultNavigationTimeout(60000);
-    // try {
-    //     await loadDirPage(page);
-    // } catch (e) {
-    //     if (!page.isClosed()) {
-    //         await browser.close();
-    //     }
-    //     return;
-    // }
-    // await  new Promise((resolve, reject) => {
-    //     setTimeout(() => {
-    //         resolve('foo');
-    //     }, 5000);
-    // });
+    try {
+        await loadDirPage(page);
+    } catch (e) {
+        if (!page.isClosed()) {
+            await browser.close();
+        }
+        return;
+    }
+    await  new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve('foo');
+        }, 5000);
+    });
     let interval = setInterval(() => {
         if(successfull && !page.isClosed()) {
             successfull = clickAll(page, browser);
