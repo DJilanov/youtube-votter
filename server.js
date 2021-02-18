@@ -296,7 +296,7 @@ setInterval(() => {
 setInterval(() => {
     chromeCounter--;
     fetchproxies();
-}, 300000);
+}, 600000);
 
 fetchproxies();
 
