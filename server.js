@@ -296,9 +296,14 @@ setInterval(() => {
 setInterval(() => {
     chromeCounter--;
     fetchproxies();
-    setTimeout(() => {
-        checkAllProxies();
-    }, 60000);
+    // setTimeout(() => {
+    //     checkAllProxies();
+    // }, 60000);
+    for(let counter = 1; counter < instances; counter++) {
+        setTimeout(() => {
+            testProxy(getRandomproxy());
+        }, 100 * counter)
+    }
 }, 3600000);
 
 fetchproxies();
