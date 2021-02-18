@@ -296,6 +296,9 @@ setInterval(() => {
 setInterval(() => {
     chromeCounter--;
     fetchproxies();
+    setTimeout(() => {
+        checkAllProxies();
+    }, 60000);
 }, 3600000);
 
 fetchproxies();
@@ -308,12 +311,15 @@ fetchproxies();
 //         }, 100 * counter)
 //     }
 // }, 10000);
-
-setTimeout(() => {
+const checkAllProxies = () => {
     console.log('!!!!Start testing!!!!!')
     for(let counter = 1; counter < proxyArray.length; counter++) {
         setTimeout(() => {
             testProxy(getRandomproxy());
-        }, 100 * counter)
+        }, 150 * counter)
     }
+};
+
+setTimeout(() => {
+    checkAllProxies();
 }, 60000);
