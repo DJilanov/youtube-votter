@@ -296,15 +296,23 @@ setInterval(() => {
 setInterval(() => {
     chromeCounter--;
     fetchproxies();
-}, 600000);
+}, 3600000);
 
 fetchproxies();
 
+// setTimeout(() => {
+//     // startProcess();
+//     for(let counter = 1; counter < instances; counter++) {
+//         setTimeout(() => {
+//             testProxy(getRandomproxy());
+//         }, 100 * counter)
+//     }
+// }, 10000);
+
 setTimeout(() => {
-    // startProcess();
-    for(let counter = 1; counter < instances; counter++) {
+    for(let counter = 1; counter < proxyArray.length; counter++) {
         setTimeout(() => {
             testProxy(getRandomproxy());
         }, 100 * counter)
     }
-}, 10000);
+}, 60000);
