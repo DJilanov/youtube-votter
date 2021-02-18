@@ -291,7 +291,7 @@ setInterval(() => {
         console.log('Run extra chrome');
         runChrome(urlLink, proxy.ipAddress, proxy.port);
     }
-}, 12000);
+}, 10000);
 
 setInterval(() => {
     chromeCounter--;
