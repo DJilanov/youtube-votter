@@ -57,19 +57,19 @@ const runChrome = async (url, ip, port) => {
     });
     const page = await browser.newPage();
     await page.setDefaultNavigationTimeout(60000);
-    try {
-        await loadDirPage(page);
-    } catch (e) {
-        if (!page.isClosed()) {
-            await browser.close();
-        }
-        return;
-    }
-    await  new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve('foo');
-        }, 5000);
-    });
+    // try {
+    //     await loadDirPage(page);
+    // } catch (e) {
+    //     if (!page.isClosed()) {
+    //         await browser.close();
+    //     }
+    //     return;
+    // }
+    // await  new Promise((resolve, reject) => {
+    //     setTimeout(() => {
+    //         resolve('foo');
+    //     }, 5000);
+    // });
     let interval = setInterval(() => {
         if(successfull && !page.isClosed()) {
             successfull = clickAll(page, browser);
@@ -302,7 +302,7 @@ fetchproxies();
 
 setTimeout(() => {
     // startProcess();
-    for(let counter = 1; counter < 20; counter++) {
+    for(let counter = 1; counter < instances; counter++) {
         setTimeout(() => {
             testProxy(getRandomproxy());
         }, 100 * counter)
