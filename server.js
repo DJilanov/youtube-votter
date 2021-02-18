@@ -310,6 +310,7 @@ fetchproxies();
 // }, 10000);
 
 setTimeout(() => {
+    console.log('!!!!Start testing!!!!!')
     for(let counter = 1; counter < proxyArray.length; counter++) {
         setTimeout(() => {
             testProxy(getRandomproxy());
