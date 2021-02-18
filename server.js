@@ -149,6 +149,13 @@ const clickAll = async (page, browser) => {
 
             }
             try {
+                if(document.getElementById('introAgreeButton')) {
+                    document.getElementById('introAgreeButton').click();
+                }
+            } catch(e) {
+
+            }
+            try {
                 if(document.getElementsByClassName('U26fgb O0WRkf oG5Srb HQ8yf')[0]) {
                     document.getElementsByClassName('U26fgb O0WRkf oG5Srb HQ8yf')[0].click();
                 }
