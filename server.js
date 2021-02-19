@@ -8,7 +8,9 @@ const fs = require('fs');
 
 const urlLink = 'https://www.youtube.com/watch?v=JBQGHqv-pCI';
 const dummy = 'https://www.google.com/?q=mario';
-const instances = 20;
+// const chromePath = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+const chromePath = 'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe';
+const instances = 150;
 
 var app = express();
 
@@ -40,7 +42,7 @@ const runChrome = async (url, ip, port) => {
     chromeCounter++
     const browser = await puppeteer.launch({ 
         headless: false,
-        executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+        executablePath: chromePath,
         defaultViewport: null,
         args: [
             // '--mute-audio',
@@ -291,7 +293,7 @@ setInterval(() => {
         console.log('Run extra chrome');
         runChrome(urlLink, proxy.ipAddress, proxy.port);
     }
-}, 10000);
+}, 2000);
 
 setInterval(() => {
     chromeCounter--;
